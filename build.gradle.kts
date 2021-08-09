@@ -12,10 +12,14 @@ repositories {
     mavenCentral()
 }
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "13"
-}
-
 application {
     mainClass.set("MainKt")
+}
+
+dependencies {
+    implementation("com.github.ajalt.clikt:clikt:3.2.0")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "13"
 }
