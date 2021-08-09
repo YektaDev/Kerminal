@@ -17,8 +17,13 @@ group = "dev.yekta"
 version = "1.0.0"
 
 dependencies {
+    // Compose UI
     implementation(compose.desktop.currentOs)
+    // Parsing Commands
     implementation("com.github.ajalt.clikt:clikt:3.2.0")
+    // Loading Configs
+    implementation("com.sksamuel.hoplite:hoplite-core:1.4.6")
+    implementation("com.sksamuel.hoplite:hoplite-toml:1.4.6")
 }
 
 compose.desktop {
