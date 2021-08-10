@@ -28,7 +28,7 @@ class Hello : CliktCommand() {
 
 @Composable
 @Preview
-fun App() {
+fun App(themeData: Theme) = BitaTheme(themeData) {
     var text by remember { mutableStateOf("Hello, World!") }
 
     Button(onClick = {
@@ -41,21 +41,21 @@ fun App() {
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
-        try {
-            val config = ConfigLoader.Builder()
+        val config = try {
+            ConfigLoader.Builder()
                 .addSource(PropertySource.resource("config.toml"))
                 .strict()
                 .build()
                 .loadConfigOrThrow<Config>()
-
-            launchAppWindow {
-                BitaTheme(config.theme) {
-                    App()
-                }
-            }
         } catch (e: Exception) {
-            launchAppWindow {
-                InitialErrorPage(e.message ?: "Error: Could not find config file config.toml")
+            null
+        }
+
+        launchAppWindow {
+            if (config != null) {
+                App(config.theme)
+            } else {
+                InitialErrorPage(error = "Error: Could not find the file: config.toml")
             }
         }
     }
