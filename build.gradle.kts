@@ -60,8 +60,18 @@ tasks.withType<Jar> {
 
 // Output to build/libs/Bita.jar
 tasks.withType<ShadowJar> {
+    dependsOn(tasks.withType<KotlinCompile>())
     archiveBaseName.set("Bita")
     archiveVersion.set("")
     archiveAppendix.set("")
     archiveClassifier.set("")
+}
+
+tasks.register<Copy>("generateProduction") {
+    dependsOn(tasks.withType<ShadowJar>())
+    from(
+        layout.buildDirectory.file("libs/Bita.jar"),
+        layout.projectDirectory.file("defaults/.")
+    )
+    into(layout.projectDirectory.dir("BitaRelease"))
 }

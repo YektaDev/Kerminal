@@ -8,7 +8,6 @@ import com.sksamuel.hoplite.PropertySource
 import compose.launchAppWindow
 import page.InitialErrorPage
 import page.MainPage
-import java.nio.file.Path
 
 // TODO: Handle the use of Clikt
 class Hello : CliktCommand() {
