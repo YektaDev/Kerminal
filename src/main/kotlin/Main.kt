@@ -1,11 +1,3 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
@@ -13,9 +5,9 @@ import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.clikt.parameters.types.int
 import com.sksamuel.hoplite.ConfigLoader
 import com.sksamuel.hoplite.PropertySource
-import compose.BitaTheme
 import compose.launchAppWindow
 import page.InitialErrorPage
+import page.MainPage
 
 // TODO: Handle the use of Clikt
 class Hello : CliktCommand() {
@@ -29,24 +21,12 @@ class Hello : CliktCommand() {
     }
 }
 
-@Composable
-@Preview
-fun App(themeData: Theme) = BitaTheme(themeData) {
-    var text by remember { mutableStateOf("Hello, World!") }
-
-    Button(onClick = {
-        text = "Hello, Desktop!"
-    }) {
-        Text(text)
-    }
-}
-
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = try {
             ConfigLoader.Builder()
-                .addSource(PropertySource.resource("config.toml"))
+                .addSource(PropertySource.resource(Resource.configPath))
                 .strict()
                 .build()
                 .loadConfigOrThrow<Config>()
@@ -56,9 +36,9 @@ object Main {
 
         launchAppWindow {
             if (config != null) {
-                App(config.theme)
+                MainPage(config.theme)
             } else {
-                InitialErrorPage(error = "Error: Could not find the file: config.toml")
+                InitialErrorPage(error = "Error: Could not find the file: ${Resource.configPath}")
             }
         }
     }

@@ -2,6 +2,7 @@ import java.net.URL
 import java.util.*
 
 object Resource {
+    const val configPath = "config.toml"
     private const val iconPath = "icon.svg"
     private const val propertiesPath = "app.properties"
 
