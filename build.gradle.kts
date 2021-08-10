@@ -2,6 +2,9 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val appGroup = "dev.yekta"
+val appVersion = "1.0.0"
+
 plugins {
     kotlin("jvm") version "1.5.21"
     id("org.jetbrains.compose") version "1.0.0-alpha1"
@@ -13,8 +16,8 @@ repositories {
     google()
 }
 
-group = "dev.yekta"
-version = "1.0.0"
+group = appGroup
+version = appVersion
 
 dependencies {
     // Compose UI
@@ -29,6 +32,15 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "MainKt"
+    }
+}
+
+tasks.processResources {
+    filesMatching("**/app.properties") {
+        filter {
+            it.replace("%APP_GROUP%", appGroup)
+            it.replace("%APP_VERSION%", appVersion)
+        }
     }
 }
 
