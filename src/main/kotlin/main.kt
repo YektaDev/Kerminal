@@ -1,4 +1,3 @@
-import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Button
@@ -75,44 +74,4 @@ object Main {
             }
         }
     }
-}
-
-
-fun launchAppWindow(content: @Composable () -> Unit) {
-    EventHandler.onStart()
-
-    application {
-        val density = LocalDensity.current.fontScale
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
-        val screenWidth = screenSize.width / density
-        val screenHeight = screenSize.height / density
-        val icon = if (Resource.icon != null) loadSvgPainter(Resource.icon!!.openStream(), LocalDensity.current) else null
-
-        Window(
-            title = App.name,
-            icon = icon,
-            state = rememberWindowState(
-                placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
-                width = (screenWidth * 0.8).dp,
-                height = (screenHeight * 0.8).dp
-            ),
-            onCloseRequest = ::exit
-        ) {
-            Scaffold(
-                topBar = {
-                    TopAppBar {
-                        WindowDraggableArea {
-                            IconButton(onClick = ::exit) {}
-                        }
-                    }
-                },
-                content = { content() }
-            )
-        }
-    }
-}
-
-fun ApplicationScope.exit() {
-    EventHandler.onEnd()
-    exitApplication()
 }
