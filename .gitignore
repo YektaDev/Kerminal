@@ -1,3 +1,4 @@
+BitaRelease/
 .gradle
 **/build/
 !src/**/build/
