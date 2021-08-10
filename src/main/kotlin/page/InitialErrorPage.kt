@@ -1,3 +1,5 @@
+package page
+
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

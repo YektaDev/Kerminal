@@ -1,3 +1,6 @@
+package compose
+
+import Theme
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable

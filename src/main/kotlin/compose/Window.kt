@@ -1,3 +1,8 @@
+package compose
+
+import App
+import EventHandler
+import Resource
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold

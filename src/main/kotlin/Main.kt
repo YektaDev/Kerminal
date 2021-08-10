@@ -13,6 +13,9 @@ import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.clikt.parameters.types.int
 import com.sksamuel.hoplite.ConfigLoader
 import com.sksamuel.hoplite.PropertySource
+import compose.BitaTheme
+import compose.launchAppWindow
+import page.InitialErrorPage
 
 // TODO: Handle the use of Clikt
 class Hello : CliktCommand() {
