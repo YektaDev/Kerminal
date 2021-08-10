@@ -1,12 +1,8 @@
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Button
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -16,8 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.dp
@@ -77,18 +71,7 @@ object Main {
             }
         } catch (e: Exception) {
             launchAppWindow {
-                DesktopMaterialTheme {
-                    Box(
-                        modifier = Modifier.background(Color.Black).fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = e.message ?: "Error: Could not find config file config.toml",
-                            style = MaterialTheme.typography.h6,
-                            color = Color.Gray
-                        )
-                    }
-                }
+                InitialErrorPage(e.message ?: "Error: Could not find config file config.toml")
             }
         }
     }
