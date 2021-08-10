@@ -90,33 +90,30 @@ object Main {
 }
 
 
-fun launchAppWindow(content: @Composable () -> Unit) = application {
-    val density = LocalDensity.current.fontScale
-    val screenSize = Toolkit.getDefaultToolkit().screenSize
-    val screenWidth = screenSize.width / density
-    val screenHeight = screenSize.height / density
-    val icon = with(Main::class.java.getResource("/icon.svg")) {
-        if (this != null) {
-            loadSvgPainter(this.openStream(), LocalDensity.current)
-        } else {
-            null
-        }
-    }
+fun launchAppWindow(content: @Composable () -> Unit) {
+    EventHandler.onStart()
 
-    Window(
-        title = "Bita",
-        icon = icon,
-        state = rememberWindowState(
-            placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
-            width = (screenWidth * 0.8).dp,
-            height = (screenHeight * 0.8).dp
-        ),
-        onCloseRequest = {
-            EventHandler.onEnd()
-            exitApplication()
+    application {
+        val density = LocalDensity.current.fontScale
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        val screenWidth = screenSize.width / density
+        val screenHeight = screenSize.height / density
+        val icon = if (Resource.icon != null) loadSvgPainter(Resource.icon!!.openStream(), LocalDensity.current) else null
+
+        Window(
+            title = App.name,
+            icon = icon,
+            state = rememberWindowState(
+                placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
+                width = (screenWidth * 0.8).dp,
+                height = (screenHeight * 0.8).dp
+            ),
+            onCloseRequest = {
+                EventHandler.onEnd()
+                exitApplication()
+            }
+        ) {
+            content()
         }
-    ) {
-        EventHandler.onStart()
-        content()
     }
 }
