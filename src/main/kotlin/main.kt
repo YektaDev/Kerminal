@@ -3,9 +3,13 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Button
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
@@ -108,12 +113,23 @@ fun launchAppWindow(content: @Composable () -> Unit) {
                 width = (screenWidth * 0.8).dp,
                 height = (screenHeight * 0.8).dp
             ),
-            onCloseRequest = {
-                EventHandler.onEnd()
-                exitApplication()
-            }
+            onCloseRequest = ::exit
         ) {
-            content()
+            Scaffold(
+                topBar = {
+                    TopAppBar {
+                        WindowDraggableArea {
+                            IconButton(onClick = ::exit) {}
+                        }
+                    }
+                },
+                content = { content() }
+            )
         }
     }
+}
+
+fun ApplicationScope.exit() {
+    EventHandler.onEnd()
+    exitApplication()
 }
