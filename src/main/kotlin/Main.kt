@@ -4,10 +4,11 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.clikt.parameters.types.int
 import com.sksamuel.hoplite.ConfigLoader
-import com.sksamuel.hoplite.PropertySource
+import com.sksamuel.hoplite.toml.TomlPropertySource
 import compose.launchAppWindow
 import page.InitialErrorPage
 import page.MainPage
+import java.io.File
 
 // TODO: Handle the use of Clikt
 class Hello : CliktCommand() {
@@ -27,8 +28,7 @@ object Main {
         var error: String? = null
         val config = try {
             ConfigLoader.Builder()
-                .addSource(PropertySource.resource(Resource.configPath))
-                .strict()
+                .addSource(TomlPropertySource(File(Resource.configPath).readText()))
                 .build()
                 .loadConfigOrThrow<Config>()
         } catch (e: Exception) {
