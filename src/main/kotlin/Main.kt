@@ -8,6 +8,7 @@ import com.sksamuel.hoplite.PropertySource
 import compose.launchAppWindow
 import page.InitialErrorPage
 import page.MainPage
+import java.nio.file.Path
 
 // TODO: Handle the use of Clikt
 class Hello : CliktCommand() {
@@ -24,6 +25,7 @@ class Hello : CliktCommand() {
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
+        var error: String? = null
         val config = try {
             ConfigLoader.Builder()
                 .addSource(PropertySource.resource(Resource.configPath))
@@ -31,6 +33,7 @@ object Main {
                 .build()
                 .loadConfigOrThrow<Config>()
         } catch (e: Exception) {
+            error = e.message
             null
         }
 
@@ -40,7 +43,7 @@ object Main {
             }
         } else {
             launchAppWindow(null) {
-                InitialErrorPage(error = "Error: Could not find the file: ${Resource.configPath}")
+                InitialErrorPage(error = error ?: "Error: Could not find the file: ${Resource.configPath}")
             }
         }
     }
