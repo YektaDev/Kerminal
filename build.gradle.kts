@@ -50,22 +50,18 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "13"
 }
 
-val jar by tasks.getting(Jar::class) {
+tasks.withType<Jar> {
     manifest {
         attributes["Manifest-Version"] = "1.0"
         attributes["Main-Class"] = "Main"
+        attributes["Developer"] = "YektaDev"
     }
-
-    // To add all of the dependencies
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from(sourceSets.main.get().output)
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
 }
 
 // Output to build/libs/Bita.jar
 tasks.withType<ShadowJar> {
-    archiveFileName.set("Bita.jar")
+    archiveBaseName.set("Bita")
+    archiveVersion.set("")
+    archiveAppendix.set("")
+    archiveClassifier.set("")
 }
