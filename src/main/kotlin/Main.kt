@@ -34,10 +34,12 @@ object Main {
             null
         }
 
-        launchAppWindow {
-            if (config != null) {
+        if (config != null) {
+            launchAppWindow(config.theme) {
                 MainPage(config.theme)
-            } else {
+            }
+        } else {
+            launchAppWindow(null) {
                 InitialErrorPage(error = "Error: Could not find the file: ${Resource.configPath}")
             }
         }
