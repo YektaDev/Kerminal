@@ -20,7 +20,7 @@ fun InitialErrorPage(error: String) = DesktopMaterialTheme {
         Text(
             text = error,
             style = MaterialTheme.typography.h6,
-            color = Color.Gray
+            color = Color(41, 171, 226)
         )
     }
 }
