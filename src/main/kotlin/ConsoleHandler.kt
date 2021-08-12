@@ -1,7 +1,5 @@
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.withStyle
 
 object ConsoleHandler {
     private lateinit var builder: AnnotatedString.Builder
@@ -28,18 +26,8 @@ object ConsoleHandler {
             if (line.isBlank()) {
                 builder.append(line)
             } else {
-                val words = line.split(" ")
-
-                words.forEachIndexed { index, word ->
-                    if (word.isBlank() && word.isNotEmpty())
-                        builder.append(word)
-                    else if (index == words.lastIndex) {
-                        builder.withStyle(SpanStyle(color = colors[lineIndex % 4])) {
-                            builder.append(word)
-                        }
-                    } else {
-                        builder.append("$word ")
-                    }
+                with(StyleGenerator) {
+                    builder.forLine(line)
                 }
             }
 
