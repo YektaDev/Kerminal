@@ -10,8 +10,7 @@ object ConsoleHandler {
     fun processInput(text: String): AnnotatedString {
         if (::builder.isInitialized)
             if (
-                prevText == text ||
-                (prevText.lines().size > 1 && text.lines().size > 1 && text.elementAt(text.lastIndex) != '\n' && prevText.exceptLastLine() != text.exceptLastLine())
+                prevText == text || !identicalLinesExceptLastLineAreEqual(text, prevText) || isAtTheBeginningOfLinesExceptOne(prevText, text)
             )
                 return builder.toAnnotatedString()
 
@@ -63,3 +62,31 @@ private fun String.exceptLastLine(): String {
         this.substring(0, lastNewLine)
     }
 }
+
+private fun identicalLinesExceptLastLineAreEqual(s1: String, s2: String): Boolean {
+    val s1LineCount = s1.count { it == '\n' } + 1
+    val s2LineCount = s2.count { it == '\n' } + 1
+
+    return if (s1LineCount == 1 && s2LineCount == 1)
+        true
+    else if (s1LineCount == s2LineCount) {
+        s1.exceptLastLine() == s2.exceptLastLine()
+    } else {
+        val smallestIdenticalIndex = if (s1LineCount < s2LineCount)
+            s1.lastIndexOf('\n')
+        else
+            s2.lastIndexOf('\n')
+
+        if (smallestIdenticalIndex == -1) {
+            return true
+        }
+
+        s1.substring(0, smallestIdenticalIndex + 1) == s2.substring(0, smallestIdenticalIndex + 1)
+    }
+}
+
+private fun isAtTheBeginningOfLinesExceptOne(prevText: String, newText: String) =
+    if (prevText.isEmpty() || newText.isEmpty())
+        false
+    else
+        prevText[prevText.lastIndex] == '\n' && newText.length < prevText.length
