@@ -3,6 +3,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class ConsoleState {
+    val colorChangeIndexList = hashMapOf<Int, Long>()
     private val initialText = """
         |
         |**************************************************************************************
@@ -29,12 +30,20 @@ class ConsoleState {
         text = initialText
     }
 
-    fun print(line: String) {
+    fun print(text: String, colorCode:Long? = null) {
+        if (colorCode != null){
+            colorChangeIndexList[this.text.length] = colorCode
+        }
+
+        this.text += text
+    }
+
+    fun printLine(line: String) {
         text += "$line\n"
     }
 
-    fun printError(error: String) = print("> Error: $error")
-    fun printInfo(info: String) = print("> Info: $info")
-    fun printWarning(warning: String) = print("> Warning: $warning")
-    fun printSuccess(success: String) = print("> Success: $success")
+    fun printError(error: String) = printLine("> Error: $error")
+    fun printInfo(info: String) = printLine("> Info: $info")
+    fun printWarning(warning: String) = printLine("> Warning: $warning")
+    fun printSuccess(success: String) = printLine("> Success: $success")
 }
