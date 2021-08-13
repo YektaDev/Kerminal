@@ -3,6 +3,7 @@ package compose
 import App
 import EventHandler
 import Resource
+import Resource.transparentBackColor
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -31,10 +32,11 @@ fun launchAppWindow(content: @Composable () -> Unit) {
         null
     }
 
-    val barColor = if (theme == null || theme.isDark) {
+    val barColor = if (theme == null) {
+        // A fallback color in the case the config isn't loaded (InitialError)
         Color(255, 255, 255, 30)
     } else {
-        Color(0, 0, 0, 30)
+        transparentBackColor
     }
 
     application {
@@ -79,4 +81,3 @@ fun WindowState.switchMaximize() {
     else
         WindowPlacement.Floating
 }
-

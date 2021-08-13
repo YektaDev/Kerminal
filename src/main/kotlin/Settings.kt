@@ -1,3 +1,4 @@
+import androidx.compose.ui.graphics.Color
 import java.net.URL
 import java.util.*
 
@@ -19,6 +20,12 @@ object Resource {
     const val configPath = "config.toml"
     private const val iconPath = "icon.svg"
     private const val propertiesPath = "app.properties"
+
+    val transparentBackColor = if (appConfig.theme.isDark) {
+        Color(255, 255, 255, 30)
+    } else {
+        Color(0, 0, 0, 30)
+    }
 
     val properties: Properties? by lazy {
         val stream = Thread.currentThread().contextClassLoader.getResourceAsStream(propertiesPath)
