@@ -17,6 +17,7 @@ import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
+import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import java.awt.Toolkit
@@ -36,21 +37,22 @@ fun launchAppWindow(themeConfig: Theme?, content: @Composable () -> Unit) {
         val screenWidth = screenSize.width / density
         val screenHeight = screenSize.height / density
         val icon = if (Resource.icon != null) loadSvgPainter(Resource.icon!!.openStream(), LocalDensity.current) else null
+        val state = rememberWindowState(
+            placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
+            width = (screenWidth * 0.8).dp,
+            height = (screenHeight * 0.8).dp
+        )
 
         Window(
             title = App.name,
             icon = icon,
             undecorated = true,
             onCloseRequest = ::exit,
-            state = rememberWindowState(
-                placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
-                width = (screenWidth * 0.8).dp,
-                height = (screenHeight * 0.8).dp
-            )
+            state = state
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 WindowContent(themeConfig, content)
-                WindowBar(barColor, ::exit)
+                WindowBar(barColor, state, ::exit)
             }
         }
     }
@@ -60,3 +62,15 @@ fun ApplicationScope.exit() {
     EventHandler.onEnd()
     exitApplication()
 }
+
+fun WindowState.minimize() {
+    isMinimized = true
+}
+
+fun WindowState.switchMaximize() {
+    placement = if (placement != WindowPlacement.Maximized && placement != WindowPlacement.Fullscreen)
+        WindowPlacement.Maximized
+    else
+        WindowPlacement.Floating
+}
+

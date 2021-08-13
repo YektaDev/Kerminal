@@ -17,9 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowScope
+import androidx.compose.ui.window.WindowState
 
 @Composable
-fun WindowScope.WindowBar(color: Color, exitClick: () -> Unit) = this.WindowDraggableArea {
+fun WindowScope.WindowBar(color: Color, windowState: WindowState, exitClick: () -> Unit) = this.WindowDraggableArea {
     TopAppBar(
         modifier = Modifier
             .height(32.dp)
@@ -32,11 +33,11 @@ fun WindowScope.WindowBar(color: Color, exitClick: () -> Unit) = this.WindowDrag
             WindowBarButton(Color(0xffff1744), exitClick)
             Spacer(Modifier.width(8.dp))
             WindowBarButton(Color(0xff00e676)) {
-
+                windowState.switchMaximize()
             }
             Spacer(Modifier.width(8.dp))
             WindowBarButton(Color(0xffffea00)) {
-
+                windowState.minimize()
             }
         }
     }
