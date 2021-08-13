@@ -28,8 +28,6 @@ object ConsoleHandler {
     }
 }
 
-private fun String.getLines() = replace("\r", "").split("\n")
-
 private fun String.exceptLastLine(): String {
     val lastNewLine = lastIndexOf('\n')
     return if (lastNewLine == -1)

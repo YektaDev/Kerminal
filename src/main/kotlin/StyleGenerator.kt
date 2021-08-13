@@ -3,8 +3,8 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.text.SpanStyle
 
 class StyleGenerator {
-    // Only for detection of "
-    private var stringPoints = false
+    // Only to detect strings quoted with "
+    private var isInsideString = false
     private var shouldChangeColor = false
 
     // For user-defined color
@@ -12,19 +12,19 @@ class StyleGenerator {
 
     fun generateFor(text: String, index: Int): SpanStyle? {
         if (shouldChangeColor) {
-            stringPoints = false
+            isInsideString = false
             shouldChangeColor = false
         }
 
         if (text[index] == '\"' && (index == 0 || text[index - 1] != '\\')) {
-            if (!stringPoints) {
-                stringPoints = true
+            if (!isInsideString) {
+                isInsideString = true
             } else {
                 shouldChangeColor = true
             }
         }
 
-        if (stringPoints) {
+        if (isInsideString) {
             return SpanStyle(color = Green)
         }
 
