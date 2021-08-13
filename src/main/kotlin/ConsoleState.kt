@@ -32,4 +32,9 @@ class ConsoleState {
     fun print(line: String) {
         text += "$line\n"
     }
+
+    fun printError(error: String) = print("> Error: $error")
+    fun printInfo(info: String) = print("> Info: $info")
+    fun printWarning(warning: String) = print("> Warning: $warning")
+    fun printSuccess(success: String) = print("> Success: $success")
 }
