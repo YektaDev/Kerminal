@@ -1,6 +1,20 @@
 import java.net.URL
 import java.util.*
 
+lateinit var appConfig: Config
+
+object App {
+    val name: String by lazy {
+        Resource.properties?.getProperty("name") ?: "[UNRESOLVED_NAME]"
+    }
+    val version: String by lazy {
+        Resource.properties?.getProperty("version") ?: "[UNRESOLVED_VERSION]"
+    }
+    val group: String by lazy {
+        Resource.properties?.getProperty("group") ?: "[UNRESOLVED_GROUP]"
+    }
+}
+
 object Resource {
     const val configPath = "config.toml"
     private const val iconPath = "icon.svg"
@@ -17,16 +31,4 @@ object Resource {
     }
 
     fun get(path: String): URL? = Resource::class.java.getResource(path) ?: null
-}
-
-object App {
-    val name: String by lazy {
-        Resource.properties?.getProperty("name") ?: "[UNRESOLVED_NAME]"
-    }
-    val version: String by lazy {
-        Resource.properties?.getProperty("version") ?: "[UNRESOLVED_VERSION]"
-    }
-    val group: String by lazy {
-        Resource.properties?.getProperty("group") ?: "[UNRESOLVED_GROUP]"
-    }
 }

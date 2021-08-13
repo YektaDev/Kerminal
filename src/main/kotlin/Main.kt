@@ -37,11 +37,13 @@ object Main {
         }
 
         if (config != null) {
-            launchAppWindow(config.theme) {
-                MainPage(config.theme)
+            appConfig = config
+
+            launchAppWindow {
+                MainPage()
             }
         } else {
-            launchAppWindow(null) {
+            launchAppWindow {
                 InitialErrorPage(error = error ?: "Error: Could not find the file: ${Resource.configPath}")
             }
         }

@@ -3,7 +3,6 @@ package compose
 import App
 import EventHandler
 import Resource
-import Theme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -20,12 +19,19 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import appConfig
 import java.awt.Toolkit
 
-fun launchAppWindow(themeConfig: Theme?, content: @Composable () -> Unit) {
+fun launchAppWindow(content: @Composable () -> Unit) {
     EventHandler.onStart()
 
-    val barColor = if (themeConfig == null || themeConfig.isDark) {
+    val theme = try {
+        appConfig.theme
+    } catch (_: UninitializedPropertyAccessException) {
+        null
+    }
+
+    val barColor = if (theme == null || theme.isDark) {
         Color(255, 255, 255, 30)
     } else {
         Color(0, 0, 0, 30)
@@ -51,7 +57,7 @@ fun launchAppWindow(themeConfig: Theme?, content: @Composable () -> Unit) {
             state = state
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                WindowContent(themeConfig, content)
+                WindowContent(theme, content)
                 WindowBar(barColor, state, ::exit)
             }
         }

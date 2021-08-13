@@ -8,17 +8,18 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import appConfig
 import compose.BitaTheme
 import compose.Console
 
 @Preview
 @Composable
-fun MainPage(themeData: Theme) = BitaTheme(themeData) {
+fun MainPage() = BitaTheme(appConfig.theme) {
     Surface(
         modifier = Modifier
-            .background(Color(themeData.color.back))
+            .background(Color(appConfig.theme.color.back))
             .fillMaxSize(),
-        contentColor = Color(themeData.color.front)
+        contentColor = Color(appConfig.theme.color.front)
     ) {
         Console()
     }
