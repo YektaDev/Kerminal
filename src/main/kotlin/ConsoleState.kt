@@ -38,8 +38,8 @@ class ConsoleState {
         text = initialText
     }
 
-    fun print(text: String, colorCode:Long? = null) {
-        if (colorCode != null){
+    fun print(text: String, colorCode: Long? = null) {
+        if (colorCode != null) {
             colorChangeIndexList[this.text.length] = colorCode
         }
 

@@ -1,7 +1,7 @@
 package compose
 
 import ConsoleHandler.processInput
-import ConsoleManager
+import State
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -18,7 +18,7 @@ import appConfig
 
 @Composable
 fun Console(modifier: Modifier) {
-    val state = remember { ConsoleManager.state }
+    val state = remember { State.console }
 
     TextField(
         modifier = modifier,
@@ -34,12 +34,12 @@ fun Console(modifier: Modifier) {
         ),
         visualTransformation = {
             TransformedText(
-                processInput(ConsoleManager.state.text),
+                processInput(State.console.text),
                 OffsetMapping.Identity
             )
         },
         onValueChange = {
-            ConsoleManager.state.setText(processInput(it).toString())
+            State.console.setText(processInput(it).toString())
         }
     )
 }

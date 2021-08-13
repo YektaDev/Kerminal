@@ -4,6 +4,10 @@ import java.util.*
 
 lateinit var appConfig: Config
 
+object State {
+    val console = ConsoleState()
+}
+
 object App {
     val name: String by lazy {
         Resource.properties?.getProperty("name") ?: "[UNRESOLVED_NAME]"

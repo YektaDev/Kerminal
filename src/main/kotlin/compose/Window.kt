@@ -26,13 +26,13 @@ import java.awt.Toolkit
 fun launchAppWindow(content: @Composable () -> Unit) {
     EventHandler.onStart()
 
-    val theme = try {
-        appConfig.theme
+    val config = try {
+        appConfig
     } catch (_: UninitializedPropertyAccessException) {
         null
     }
 
-    val barColor = if (theme == null) {
+    val barColor = if (config == null) {
         // A fallback color in the case the config isn't loaded (InitialError)
         Color(255, 255, 255, 30)
     } else {
@@ -56,10 +56,11 @@ fun launchAppWindow(content: @Composable () -> Unit) {
             icon = icon,
             undecorated = true,
             onCloseRequest = ::exit,
-            state = state
+            state = state,
+            alwaysOnTop = config?.window?.alwaysOnTop ?: false
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                WindowContent(theme, content)
+                WindowContent(config?.theme, content)
                 WindowBar(barColor, state, ::exit)
             }
         }

@@ -28,7 +28,7 @@ class StyleGenerator {
             return SpanStyle(color = Green)
         }
 
-        ConsoleManager.state.colorChangeIndexList[index]?.let {
+        State.console.colorChangeIndexList[index]?.let {
             lastColor = Color(it)
         }
 
