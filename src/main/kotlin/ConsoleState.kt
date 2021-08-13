@@ -20,6 +20,14 @@ class ConsoleState {
     var text by mutableStateOf(initialText)
         private set
 
+    init {
+        colorChangeIndexList[0] = appConfig.theme.color.primaryVariant
+        colorChangeIndexList[87] = appConfig.theme.color.secondary
+        colorChangeIndexList[375] = appConfig.theme.color.primaryVariant
+        colorChangeIndexList[462] = appConfig.theme.color.warning
+        colorChangeIndexList[478] = appConfig.theme.color.front
+    }
+
     @JvmName("setConsoleText")
     fun setText(newText: String) {
         if (newText.count { it == '\n' } >= text.count { it == '\n' })
