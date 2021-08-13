@@ -1,53 +1,41 @@
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.withStyle
 
-object StyleGenerator {
+class StyleGenerator {
+    // Only for detection of "
     private var stringPoints = false
     private var shouldChangeColor = false
 
-    fun AnnotatedString.Builder.forLine(line: String) {
-        val words = line.split(" ")
+    // For user-defined color
+    private var lastColor: Color? = null
 
-        words.forEachIndexed { wordIndex, word ->
-            if (word.isBlank() && word.isNotEmpty())
-                append(word)
-            else if (wordIndex == words.lastIndex) {
-                stylize(word, wordIndex)
+    fun generateFor(text: String, index: Int): SpanStyle? {
+        if (shouldChangeColor) {
+            stringPoints = false
+            shouldChangeColor = false
+        }
+
+        if (text[index] == '\"' && (index == 0 || text[index - 1] != '\\')) {
+            if (!stringPoints) {
+                stringPoints = true
             } else {
-                stylize("$word ", wordIndex)
+                shouldChangeColor = true
             }
         }
 
-        stringPoints = false
-        shouldChangeColor = false
-    }
-
-    private fun AnnotatedString.Builder.stylize(word: String, index: Int) {
-
-
-        word.forEachIndexed { charIndex, char ->
-            if (shouldChangeColor) {
-                stringPoints = false
-                shouldChangeColor = false
-            }
-
-            if (char == '\"' && (charIndex == 0 || word[charIndex - 1] != '\\')) {
-                if (!stringPoints) {
-                    stringPoints = true
-                } else {
-                    shouldChangeColor = true
-                }
-            }
-
-            if (stringPoints) {
-                withStyle(SpanStyle(color = Green)) {
-                    append(char)
-                }
-            } else {
-                append(char)
-            }
+        if (stringPoints) {
+            return SpanStyle(color = Green)
         }
+
+        ConsoleManager.state.colorChangeIndexList[index]?.let {
+            lastColor = Color(it)
+        }
+
+        if (lastColor != null) {
+            return SpanStyle(color = lastColor!!)
+        }
+
+        return null
     }
 }

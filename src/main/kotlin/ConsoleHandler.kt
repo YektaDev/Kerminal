@@ -1,5 +1,5 @@
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.withStyle
 
 object ConsoleHandler {
     private lateinit var builder: AnnotatedString.Builder
@@ -7,10 +7,11 @@ object ConsoleHandler {
 
     fun processInput(text: String): AnnotatedString {
         if (::builder.isInitialized)
-            if (
-                prevText == text || !identicalLinesExceptLastLineAreEqual(text, prevText) || isAtTheBeginningOfLinesExceptOne(prevText, text)
-            )
+            if (prevText == text ||
+                !identicalLinesExceptLastLineAreEqual(text, prevText) || isAtTheBeginningOfLinesExceptOne(prevText, text)
+            ) {
                 return builder.toAnnotatedString()
+            }
 
         prevText = text
 
@@ -19,22 +20,9 @@ object ConsoleHandler {
 
     private fun buildAnnotatedStringWithColors(text: String): AnnotatedString {
         builder = AnnotatedString.Builder()
-        val colors = listOf(Color.Red, Color.Black, Color.Yellow, Color.Blue)
-        val lines = text.getLines()
+        val fullText = text.replace("\r", "")
 
-        for ((lineIndex, line) in lines.withIndex()) {
-            if (line.isBlank()) {
-                builder.append(line)
-            } else {
-                with(StyleGenerator) {
-                    builder.forLine(line)
-                }
-            }
-
-            if (lineIndex != lines.lastIndex) {
-                builder.append("\n")
-            }
-        }
+        builder.process(fullText)
 
         return builder.toAnnotatedString()
     }
@@ -78,3 +66,18 @@ private fun isAtTheBeginningOfLinesExceptOne(prevText: String, newText: String) 
         false
     else
         prevText[prevText.lastIndex] == '\n' && newText.length < prevText.length
+
+private fun AnnotatedString.Builder.process(fullText: String) {
+    val generator = StyleGenerator()
+
+    fullText.forEachIndexed { index, char ->
+        val style = generator.generateFor(fullText, index)
+        if (style == null) {
+            append(char)
+        } else {
+            withStyle(style = style) {
+                append(char)
+            }
+        }
+    }
+}
