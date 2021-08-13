@@ -1,13 +1,11 @@
 package compose
 
 import ConsoleHandler.processInput
+import ConsoleManager
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -19,11 +17,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Console() {
-    var text by remember { mutableStateOf("") }
+    val state = remember { ConsoleManager.state }
 
     TextField(
         modifier = Modifier.fillMaxSize(),
-        value = text,
+        value = state.text,
         singleLine = false,
         maxLines = Int.MAX_VALUE,
         textStyle = TextStyle(
@@ -34,12 +32,12 @@ fun Console() {
         ),
         visualTransformation = {
             TransformedText(
-                processInput(text),
+                processInput(ConsoleManager.state.text),
                 OffsetMapping.Identity
             )
         },
         onValueChange = {
-            text = processInput(it).toString()
+            ConsoleManager.state.setText(processInput(it).toString())
         }
     )
 }
