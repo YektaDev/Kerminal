@@ -10,4 +10,6 @@
         warning = 0xffFFCC29
         error = 0xffDA0037
 [window]
-    alwaysOnTop = false
+    widthP = 85
+    heightP = 85
+    alwaysOnTop = true

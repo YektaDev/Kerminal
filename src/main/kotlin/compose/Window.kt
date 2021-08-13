@@ -22,6 +22,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import appConfig
 import java.awt.Toolkit
+import kotlin.math.roundToInt
 
 fun launchAppWindow(content: @Composable () -> Unit) {
     EventHandler.onStart()
@@ -45,10 +46,30 @@ fun launchAppWindow(content: @Composable () -> Unit) {
         val screenWidth = screenSize.width / density
         val screenHeight = screenSize.height / density
         val icon = if (Resource.icon != null) loadSvgPainter(Resource.icon!!.openStream(), LocalDensity.current) else null
+
+        val defaultWindowSizeOfTotal = 0.8f to 0.8f
+        val sizeOfTotal = config?.let {
+            val width = config.window.widthP.toFloat() / 100f
+            val height = config.window.heightP.toFloat() / 100f
+
+            if (width in .3f..1f && height in .3f..1f) {
+                width to height
+            } else {
+                defaultWindowSizeOfTotal
+            }
+        } ?: defaultWindowSizeOfTotal
+
+        val windowPlacement = if (sizeOfTotal.first == 1f && sizeOfTotal.second == 1f) {
+            WindowPlacement.Maximized
+        } else {
+            WindowPlacement.Floating
+        }
+
         val state = rememberWindowState(
-            placement = WindowPlacement.Floating, position = WindowPosition(Alignment.Center),
-            width = (screenWidth * 0.8).dp,
-            height = (screenHeight * 0.8).dp
+            placement = windowPlacement,
+            position = WindowPosition(Alignment.Center),
+            width = (screenWidth * sizeOfTotal.first).roundToInt().dp,
+            height = (screenHeight * sizeOfTotal.second).roundToInt().dp,
         )
 
         Window(
