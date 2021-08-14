@@ -1,6 +1,9 @@
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.ApplicationScope
 import java.net.URL
 import java.util.*
+
+lateinit var appScope: ApplicationScope
 
 lateinit var appConfig: Config
 

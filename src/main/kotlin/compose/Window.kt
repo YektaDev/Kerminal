@@ -21,6 +21,7 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import appConfig
+import appScope
 import java.awt.Toolkit
 import kotlin.math.roundToInt
 
@@ -41,6 +42,7 @@ fun launchAppWindow(content: @Composable () -> Unit) {
     }
 
     application {
+        appScope = this
         val density = LocalDensity.current.fontScale
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         val screenWidth = screenSize.width / density
