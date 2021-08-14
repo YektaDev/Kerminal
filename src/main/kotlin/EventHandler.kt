@@ -7,6 +7,10 @@ object EventHandler {
 
     }
 
+    fun afterCommand(command: String) {
+
+    }
+
     fun onEnd() {
 
     }
