@@ -7,6 +7,7 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,7 +37,7 @@ fun MainPage() = BitaTheme(appConfig.theme) {
                 .verticalScroll(verticalScrollState)
         )
         VerticalScrollbar(
-            modifier = Modifier.background(transparentBackColor).fillMaxHeight(),
+            modifier = Modifier.padding(top = 32.dp).background(transparentBackColor).fillMaxHeight(),
             adapter = rememberScrollbarAdapter(verticalScrollState),
             style = ScrollbarStyle(
                 minimalHeight = 300.dp,
