@@ -46,12 +46,15 @@ class ConsoleState {
         this.text += text
     }
 
-    fun printLine(line: String) {
-        text += "$line\n"
+    fun printLine(line: String? = null) {
+        if (line != null) {
+            text += "$line"
+        }
+        text += '\n'
     }
 
-    fun printError(error: String) = printLine("> Error: $error")
-    fun printInfo(info: String) = printLine("> Info: $info")
-    fun printWarning(warning: String) = printLine("> Warning: $warning")
-    fun printSuccess(success: String) = printLine("> Success: $success")
+    fun printError(error: String?) = if (error != null) printLine("> Error: $error") else Unit
+    fun printInfo(info: String?) = if (info != null) printLine("> Info: $info") else Unit
+    fun printWarning(warning: String?) = if (warning != null) printLine("> Warning: $warning") else Unit
+    fun printSuccess(success: String?) = if (success != null) printLine("> Success: $success") else Unit
 }
