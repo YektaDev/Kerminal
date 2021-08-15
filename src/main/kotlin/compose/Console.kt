@@ -26,13 +26,17 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import appConfig
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
-fun Console(modifier: Modifier, state: ConsoleState = remember { State.console }) {
-    val coroutineScope = rememberCoroutineScope()
-
+fun Console(
+    modifier: Modifier = Modifier,
+    state: ConsoleState = remember { State.console },
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    afterValueChange: () -> Unit = {},
+) {
     val colors = with(appConfig.theme.color) {
         val front = Color(front)
         val back = Color(back)
@@ -98,6 +102,7 @@ fun Console(modifier: Modifier, state: ConsoleState = remember { State.console }
                 state.setTextFieldValue(
                     TextFieldValue(result, TextRange(result.length))
                 )
+                afterValueChange()
             }
         },
         keyboardOptions = KeyboardOptions(
