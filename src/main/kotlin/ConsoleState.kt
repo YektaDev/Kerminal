@@ -1,6 +1,8 @@
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
@@ -21,7 +23,7 @@ class ConsoleState {
         |
     """.trimMargin(marginPrefix = "|")
 
-    var text by mutableStateOf(initialText)
+    var textFieldValue by mutableStateOf(TextFieldValue(initialText, selection = TextRange(initialText.length)))
         private set
 
     var prevText by mutableStateOf(initialText)
@@ -35,10 +37,29 @@ class ConsoleState {
         colorChangeIndexList[478] = appConfig.theme.color.front
     }
 
-    @JvmName("setConsoleText")
-    fun setText(newText: String) {
-        if (newText.count { it == '\n' } >= text.count { it == '\n' })
-            text = newText
+    @JvmName("setConsoleTextFieldValue")
+    fun setTextFieldValue(textFieldValue: TextFieldValue) {
+        if (textFieldValue.text.count { it == '\n' } >= this.textFieldValue.text.count { it == '\n' }) {
+            this.textFieldValue = textFieldValue
+        }
+    }
+
+    fun setText(newText: String, jumpToEnd: Boolean) {
+        if (newText.count { it == '\n' } >= this.textFieldValue.text.count { it == '\n' }) {
+            this.textFieldValue = textFieldValue.copy(
+                text = newText,
+                selection = if (jumpToEnd) TextRange(newText.length) else this.textFieldValue.selection
+            )
+        }
+    }
+
+    fun setTextRange(selection: TextRange) {
+        this.textFieldValue.text.length.let { length ->
+            if (selection.max <= length)
+                textFieldValue = textFieldValue.copy(textFieldValue.text, selection)
+            else if (selection.min <= length)
+                textFieldValue = textFieldValue.copy(textFieldValue.text, TextRange(selection.min, length))
+        }
     }
 
     @JvmName("setConsolePrevText")
@@ -47,7 +68,7 @@ class ConsoleState {
     }
 
     fun clean() {
-        text = initialText
+        textFieldValue = textFieldValue.copy(initialText)
         prevText = initialText
     }
 
@@ -56,7 +77,7 @@ class ConsoleState {
             printQueue += it
         }
         colorCode?.let {
-            colorChangeIndexList[this.text.length] = it
+            colorChangeIndexList[this.textFieldValue.text.length] = it
         }
     }
 

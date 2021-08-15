@@ -1,16 +1,21 @@
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 
 object ConsoleHandler {
     private lateinit var builder: AnnotatedString.Builder
 
-    fun processInput(text: String): AnnotatedString {
-        if (::builder.isInitialized)
-            if (State.console.prevText == text ||
-                !identicalLinesExceptLastLineAreEqual(text, State.console.prevText) || isAtTheBeginningOfLinesExceptOne(State.console.prevText, text)
-            ) {
-                return builder.toAnnotatedString()
-            }
+    fun shouldNotChange(newText: String) = ::builder.isInitialized && (
+            State.console.prevText == newText ||
+                    !identicalLinesExceptLastLineAreEqual(newText, State.console.prevText) ||
+                    isAtTheBeginningOfLinesExceptOne(State.console.prevText, newText)
+            )
+
+    fun processInput(textFieldValue: TextFieldValue): AnnotatedString {
+        val text = textFieldValue.text
+
+        if (shouldNotChange(text))
+            return builder.toAnnotatedString()
 
         if (text[text.lastIndex] == '\n') {
             val rawUserLine = State.console.prevText.substring(State.console.prevText.lastIndexOf('\n') + 1)

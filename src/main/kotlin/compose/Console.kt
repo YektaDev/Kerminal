@@ -1,8 +1,10 @@
 package compose
 
 import ConsoleHandler.processInput
+import ConsoleHandler.shouldNotChange
 import ConsoleState
 import State
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -11,10 +13,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -65,8 +72,8 @@ fun Console(modifier: Modifier, state: ConsoleState = remember { State.console }
     )
 
     TextField(
-        modifier = modifier,
-        value = state.text,
+        modifier = modifier.HandleKeyEvents(),
+        value = state.textFieldValue,
         singleLine = false,
         maxLines = Int.MAX_VALUE,
         colors = colors,
@@ -81,18 +88,29 @@ fun Console(modifier: Modifier, state: ConsoleState = remember { State.console }
         isError = false,
         visualTransformation = {
             TransformedText(
-                processInput(state.text),
+                processInput(state.textFieldValue),
                 OffsetMapping.Identity
             )
         },
-        onValueChange = {
-            state.setText(processInput(it).toString())
+        onValueChange = { value: TextFieldValue ->
+            if (!shouldNotChange(value.text)) {
+                val result = processInput(value).toString()
+                state.setTextFieldValue(
+                    TextFieldValue(result, TextRange(result.length))
+                )
+            }
         },
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = true,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Send,
+        ),
     )
 
     coroutineScope.launch {
         state.printMessageFlow().collect {
-            state.setText(processInput(state.text + it).toString())
+            state.setText(processInput(TextFieldValue(state.textFieldValue.text + it)).toString(), true)
         }
     }
 }
