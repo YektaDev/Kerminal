@@ -1,8 +1,12 @@
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 
 class ConsoleState {
+    private var printQueue = ""
+
     val colorChangeIndexList = hashMapOf<Int, Long>()
     private val initialText = """
         |
@@ -47,23 +51,29 @@ class ConsoleState {
         prevText = initialText
     }
 
-    fun print(text: String, colorCode: Long? = null) {
-        if (colorCode != null) {
-            colorChangeIndexList[this.text.length] = colorCode
+    fun print(text: String?, colorCode: Long? = null) {
+        text?.let {
+            printQueue += it
         }
-
-        this.text += text
+        colorCode?.let {
+            colorChangeIndexList[this.text.length] = it
+        }
     }
 
-    fun printLine(line: String? = null) {
-        if (line != null) {
-            text += "$line"
-        }
-        text += '\n'
-    }
+    fun printLine(line: String? = null) = print((line ?: "") + '\n')
 
     fun printError(error: String?) = if (error != null) printLine("> Error: $error") else Unit
     fun printInfo(info: String?) = if (info != null) printLine("> Info: $info") else Unit
     fun printWarning(warning: String?) = if (warning != null) printLine("> Warning: $warning") else Unit
     fun printSuccess(success: String?) = if (success != null) printLine("> Success: $success") else Unit
+
+    fun printMessageFlow() = flow {
+        while (true) {
+            if (printQueue.isNotEmpty()) {
+                emit(printQueue)
+                printQueue = ""
+            }
+            delay(50)
+        }
+    }
 }
