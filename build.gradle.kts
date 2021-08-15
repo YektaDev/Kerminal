@@ -46,8 +46,9 @@ tasks.processResources {
     }
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "13"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
 }
 
 tasks.withType<Jar> {
