@@ -72,6 +72,13 @@ fun Console(modifier: Modifier, state: ConsoleState = remember { State.console }
         colors = colors,
         textStyle = style,
         shape = RectangleShape,
+        enabled = true,
+        readOnly = false,
+        label = null,
+        placeholder = null,
+        leadingIcon = null,
+        trailingIcon = null,
+        isError = false,
         visualTransformation = {
             TransformedText(
                 processInput(state.text),
