@@ -20,6 +20,9 @@ class ConsoleState {
     var text by mutableStateOf(initialText)
         private set
 
+    var prevText by mutableStateOf(initialText)
+        private set
+
     init {
         colorChangeIndexList[0] = appConfig.theme.color.primaryVariant
         colorChangeIndexList[87] = appConfig.theme.color.secondary
@@ -34,8 +37,14 @@ class ConsoleState {
             text = newText
     }
 
+    @JvmName("setConsolePrevText")
+    fun setPrevText(text: String) {
+        prevText = text
+    }
+
     fun clean() {
         text = initialText
+        prevText = initialText
     }
 
     fun print(text: String, colorCode: Long? = null) {

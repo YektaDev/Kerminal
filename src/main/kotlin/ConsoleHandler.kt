@@ -3,17 +3,16 @@ import androidx.compose.ui.text.withStyle
 
 object ConsoleHandler {
     private lateinit var builder: AnnotatedString.Builder
-    private var prevText = ""
 
     fun processInput(text: String): AnnotatedString {
         if (::builder.isInitialized)
-            if (prevText == text ||
-                !identicalLinesExceptLastLineAreEqual(text, prevText) || isAtTheBeginningOfLinesExceptOne(prevText, text)
+            if (State.console.prevText == text ||
+                !identicalLinesExceptLastLineAreEqual(text, State.console.prevText) || isAtTheBeginningOfLinesExceptOne(State.console.prevText, text)
             ) {
                 return builder.toAnnotatedString()
             }
 
-        prevText = text
+        State.console.setPrevText(text)
 
         return buildAnnotatedStringWithColors(text)
     }
