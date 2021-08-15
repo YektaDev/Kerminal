@@ -109,7 +109,7 @@ fun Console(
             capitalization = KeyboardCapitalization.None,
             autoCorrect = true,
             keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Send,
+            imeAction = ImeAction.None,
         ),
     )
 
