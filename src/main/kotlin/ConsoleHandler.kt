@@ -12,6 +12,11 @@ object ConsoleHandler {
                 return builder.toAnnotatedString()
             }
 
+        if (text[text.lastIndex] == '\n') {
+            val rawUserLine = State.console.prevText.substring(State.console.prevText.lastIndexOf('\n') + 1)
+            CommandProcessor.run(rawUserLine)
+        }
+
         State.console.setPrevText(text)
 
         return buildAnnotatedStringWithColors(text)
