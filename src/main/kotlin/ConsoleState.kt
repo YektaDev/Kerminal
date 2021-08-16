@@ -10,32 +10,13 @@ class ConsoleState {
     private var printQueue = ""
 
     val colorChangeIndexList = hashMapOf<Int, Long>()
-    private val initialText = """
-        |
-        |**************************************************************************************
-        |                          oooooooooo  o88    o8
-        |                           888    888 oooo o888oo  ooooooo
-        |                           888oooo88   888  888    ooooo888
-        |                           888    888  888  888  888    888
-        |                          o888ooo888  o888o  888o 88ooo88 8o
-        |**************************************************************************************
-        |=> Hey There!
-        |
-    """.trimMargin(marginPrefix = "|")
+    private val initialText = ""
 
     var textFieldValue by mutableStateOf(TextFieldValue(initialText, selection = TextRange(initialText.length)))
         private set
 
     var prevText by mutableStateOf(initialText)
         private set
-
-    init {
-        colorChangeIndexList[0] = appConfig.theme.color.primaryVariant
-        colorChangeIndexList[87] = appConfig.theme.color.secondary
-        colorChangeIndexList[375] = appConfig.theme.color.primaryVariant
-        colorChangeIndexList[462] = appConfig.theme.color.warning
-        colorChangeIndexList[477] = appConfig.theme.color.front
-    }
 
     @JvmName("setConsoleTextFieldValue")
     fun setTextFieldValue(textFieldValue: TextFieldValue) {
