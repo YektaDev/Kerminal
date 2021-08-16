@@ -1,14 +1,13 @@
 [theme]
     isDark = true
     [theme.color]
-        front = 0xffEDEDED
-        back = 0xff171717
-        primary = 0xff66DE93
-        primaryVariant = 0xff66DE93
-        secondary = 0xff185ADB
-        success = 0xff81B214
-        warning = 0xffFFCC29
-        error = 0xffDA0037
+        front = 0xffededed
+        back = 0xff212121
+        primary = 0xff2962ff
+        secondary = 0xffd500f9
+        success = 0xff00c853
+        warning = 0xffffd600
+        error = 0xffff1744
 [window]
     widthP = 85
     heightP = 85

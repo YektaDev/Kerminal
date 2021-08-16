@@ -13,8 +13,7 @@ fun BitaTheme(themeConfig: Theme, content: @Composable () -> Unit) {
             isLight = !themeConfig.isDark,
 
             primary = Color(themeConfig.color.primary),
-            primaryVariant = Color(themeConfig.color.primaryVariant),
-
+            primaryVariant = Color(themeConfig.color.primary),
             secondary = Color(themeConfig.color.secondary),
             secondaryVariant = Color(themeConfig.color.secondary),
 
