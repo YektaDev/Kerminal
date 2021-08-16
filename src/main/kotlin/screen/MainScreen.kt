@@ -1,4 +1,4 @@
-package page
+package screen
 
 import Resource.transparentBackColor
 import State

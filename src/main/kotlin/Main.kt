@@ -1,8 +1,8 @@
 import com.sksamuel.hoplite.ConfigLoader
 import com.sksamuel.hoplite.toml.TomlPropertySource
 import compose.launchAppWindow
-import page.InitialErrorPage
-import page.MainPage
+import screen.InitialErrorPage
+import screen.MainPage
 import java.io.File
 
 object Main {

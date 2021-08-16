@@ -1,4 +1,4 @@
-package page
+package screen
 
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.foundation.background

@@ -55,7 +55,8 @@ tasks.withType<Jar> {
     manifest {
         attributes["Manifest-Version"] = "1.0"
         attributes["Main-Class"] = "Main"
-        attributes["Developer"] = "YektaDev"
+        attributes["Project-URL"] = "https://github.com/YektaDev/Bita"
+        attributes["Developer"] = "Ali Khaleqi Yekta"
     }
 }
 
