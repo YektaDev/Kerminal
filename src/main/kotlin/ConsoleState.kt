@@ -67,10 +67,25 @@ class ConsoleState {
 
     fun printLine(line: String? = null, colorCode: Long? = null) = print((line ?: "") + '\n', colorCode)
 
-    fun printError(error: String?) = if (error != null) printLine("> Error: $error") else Unit
-    fun printInfo(info: String?) = if (info != null) printLine("> Info: $info") else Unit
-    fun printWarning(warning: String?) = if (warning != null) printLine("> Warning: $warning") else Unit
-    fun printSuccess(success: String?) = if (success != null) printLine("> Success: $success") else Unit
+    fun printError(error: String?) = if (error != null) {
+        print("[Error] ", appConfig.theme.color.error)
+        printLine(error)
+    } else Unit
+
+    fun printInfo(info: String?) = if (info != null) {
+        print("[Info] ", appConfig.theme.color.secondary)
+        printLine(info)
+    } else Unit
+
+    fun printWarning(warning: String?) = if (warning != null) {
+        print("[Warning] ", appConfig.theme.color.warning)
+        printLine(warning)
+    } else Unit
+
+    fun printSuccess(success: String?) = if (success != null) {
+        print("[Success] ", appConfig.theme.color.success)
+        printLine(success)
+    } else Unit
 
     fun printMessageFlow() = flow {
         while (true) {
