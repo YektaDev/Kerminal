@@ -54,15 +54,18 @@ class ConsoleState {
     }
 
     fun print(text: String?, colorCode: Long? = null) {
-        text?.let {
-            printQueue += it
+        if (text == null) {
+            return
         }
-        colorCode?.let {
-            colorChangeIndexList[this.textFieldValue.text.length] = it
+        if (colorCode != null) {
+            val startIndex = textFieldValue.text.length + printQueue.length
+            colorChangeIndexList[startIndex] = colorCode
+            colorChangeIndexList[startIndex + text.length - 1] = appConfig.theme.color.front
         }
+        printQueue += text
     }
 
-    fun printLine(line: String? = null) = print((line ?: "") + '\n')
+    fun printLine(line: String? = null, colorCode: Long? = null) = print((line ?: "") + '\n', colorCode)
 
     fun printError(error: String?) = if (error != null) printLine("> Error: $error") else Unit
     fun printInfo(info: String?) = if (info != null) printLine("> Info: $info") else Unit
