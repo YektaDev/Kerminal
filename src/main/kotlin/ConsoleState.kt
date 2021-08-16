@@ -60,7 +60,7 @@ class ConsoleState {
         if (colorCode != null) {
             val startIndex = textFieldValue.text.length + printQueue.length
             colorChangeIndexList[startIndex] = colorCode
-            colorChangeIndexList[startIndex + text.length - 1] = appConfig.theme.color.front
+            colorChangeIndexList[startIndex + text.length] = appConfig.theme.color.front
         }
         printQueue += text
     }
