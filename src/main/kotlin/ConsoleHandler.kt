@@ -12,10 +12,11 @@ object ConsoleHandler {
             )
 
     fun processInput(textFieldValue: TextFieldValue): AnnotatedString {
-        val text = textFieldValue.text
+        val text = textFieldValue.text.replace("\r", "")
 
-        if (shouldNotChange(text))
+        if (shouldNotChange(text)) {
             return builder.toAnnotatedString()
+        }
 
         if (text[text.lastIndex] == '\n') {
             val rawUserLine = State.console.prevText.substring(State.console.prevText.lastIndexOf('\n') + 1)
@@ -29,10 +30,7 @@ object ConsoleHandler {
 
     private fun buildAnnotatedStringWithColors(text: String): AnnotatedString {
         builder = AnnotatedString.Builder()
-        val fullText = text.replace("\r", "")
-
-        builder.process(fullText)
-
+        builder.process(text)
         return builder.toAnnotatedString()
     }
 }

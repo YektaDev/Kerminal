@@ -19,7 +19,7 @@ class ConsoleState {
         |                           888    888  888  888  888    888
         |                          o888ooo888  o888o  888o 88ooo88 8o
         |**************************************************************************************
-        |=> Welcome Sir!
+        |=> Hey There!
         |
     """.trimMargin(marginPrefix = "|")
 
@@ -34,7 +34,7 @@ class ConsoleState {
         colorChangeIndexList[87] = appConfig.theme.color.secondary
         colorChangeIndexList[375] = appConfig.theme.color.primaryVariant
         colorChangeIndexList[462] = appConfig.theme.color.warning
-        colorChangeIndexList[478] = appConfig.theme.color.front
+        colorChangeIndexList[477] = appConfig.theme.color.front
     }
 
     @JvmName("setConsoleTextFieldValue")
