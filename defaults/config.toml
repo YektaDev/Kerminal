@@ -1,8 +1,8 @@
 [theme]
     isDark = true
     [theme.color]
-        front = 0xffededed
-        back = 0xff212121
+        front = 0xffcccccc
+        back = 0xff0c0c0c
         primary = 0xff2962ff
         secondary = 0xffd500f9
         success = 0xff00c853
