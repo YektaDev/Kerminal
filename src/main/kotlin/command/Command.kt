@@ -10,7 +10,7 @@ import com.github.ajalt.clikt.core.PrintMessage
 import com.github.ajalt.clikt.core.ProgramResult
 import com.github.ajalt.clikt.core.UsageError
 
-sealed class BitaCommand(
+sealed class Command(
     val command: String,
     val help: String
 ) : CliktCommand(name = command, help = help) {

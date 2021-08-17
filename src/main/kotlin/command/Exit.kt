@@ -3,7 +3,7 @@ package command
 import appScope
 import compose.exit
 
-class Exit : BitaCommand(
+class Exit : Command(
     command = "exit",
     help = "Exit!"
 ) {

@@ -1,4 +1,4 @@
-BitaRelease/
+Release/
 config.toml
 .gradle
 **/build/

@@ -8,13 +8,11 @@ import kotlinx.coroutines.flow.flow
 
 class ConsoleState {
     private var printQueue = ""
-
-    val colorChangeIndexList = hashMapOf<Int, Long>()
     private val initialText = ""
+    val colorChangeIndexList = hashMapOf<Int, Long>()
 
     var textFieldValue by mutableStateOf(TextFieldValue(initialText, selection = TextRange(initialText.length)))
         private set
-
     var prevText by mutableStateOf(initialText)
         private set
 

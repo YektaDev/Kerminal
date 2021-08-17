@@ -1,4 +1,4 @@
-import command.toBitaCommand
+import command.toCommand
 
 object CommandProcessor {
     fun run(rawInput: String) {
@@ -29,6 +29,6 @@ object CommandProcessor {
         }
 
     private fun runCommand(command: String, args: Array<String> = arrayOf()) {
-        command.toBitaCommand()?.run(args)
+        command.toCommand()?.run(args)
     }
 }

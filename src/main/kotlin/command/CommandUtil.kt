@@ -2,9 +2,9 @@ package command
 
 import kotlin.reflect.full.primaryConstructor
 
-fun String.toBitaCommand(): BitaCommand? {
-    for (kClass in BitaCommand::class.sealedSubclasses) {
-        if (this == (kClass.primaryConstructor?.call() as BitaCommand).command) {
+fun String.toCommand(): Command? {
+    for (kClass in Command::class.sealedSubclasses) {
+        if (this == (kClass.primaryConstructor?.call() as Command).command) {
             return kClass.primaryConstructor?.call()
         }
     }

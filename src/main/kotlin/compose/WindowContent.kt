@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun WindowContent(themeConfig: Theme?, content: @Composable () -> Unit) = if (themeConfig != null) {
-    BitaTheme(themeConfig) {
+    KonsoleTheme(themeConfig) {
         content()
     }
 } else {

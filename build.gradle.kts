@@ -55,25 +55,26 @@ tasks.withType<Jar> {
     manifest {
         attributes["Manifest-Version"] = "1.0"
         attributes["Main-Class"] = "Main"
-        attributes["Project-URL"] = "https://github.com/YektaDev/Bita"
+        attributes["Project-URL"] = "https://github.com/YektaDev/Konsole"
         attributes["Developer"] = "Ali Khaleqi Yekta"
     }
 }
 
-// Output to build/libs/Bita.jar
+// Output: build/libs/Konsole.jar
 tasks.withType<ShadowJar> {
     dependsOn(tasks.withType<KotlinCompile>())
-    archiveBaseName.set("Bita")
+    archiveBaseName.set("Konsole")
     archiveVersion.set("")
     archiveAppendix.set("")
     archiveClassifier.set("")
 }
 
+// Output: Release/
 tasks.register<Copy>("generateProduction") {
     dependsOn(tasks.withType<ShadowJar>())
     from(
-        layout.buildDirectory.file("libs/Bita.jar"),
+        layout.buildDirectory.file("libs/Konsole.jar"),
         layout.projectDirectory.file("defaults/.")
     )
-    into(layout.projectDirectory.dir("BitaRelease"))
+    into(layout.projectDirectory.dir("Release"))
 }

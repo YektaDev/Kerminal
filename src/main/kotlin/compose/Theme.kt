@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun BitaTheme(themeConfig: Theme, content: @Composable () -> Unit) {
+fun KonsoleTheme(themeConfig: Theme, content: @Composable () -> Unit) {
     DesktopMaterialTheme(
         colors = Colors(
             isLight = !themeConfig.isDark,
