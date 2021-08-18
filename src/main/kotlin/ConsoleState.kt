@@ -46,9 +46,13 @@ class ConsoleState {
         prevText = text
     }
 
-    fun clean() {
-        textFieldValue = textFieldValue.copy(initialText)
+    fun clear() {
         prevText = initialText
+        this.textFieldValue = textFieldValue.copy(
+            text = initialText+ " ",
+            selection = TextRange(initialText.length)
+        )
+        // TODO: NOT IMPLEMENTED YET
     }
 
     fun print(text: String?, colorCode: Long? = null) {
