@@ -1,5 +1,3 @@
-@file:Suppress("SpellCheckingInspection")
-
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,8 +5,8 @@ val appGroup = "dev.yekta"
 val appVersion = "1.0.0"
 
 plugins {
-    kotlin("jvm") version "1.5.21"
-    id("org.jetbrains.compose") version "1.0.0-alpha1"
+    kotlin("jvm") version "1.5.31"
+    id("org.jetbrains.compose") version "1.0.0"
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -25,10 +23,10 @@ dependencies {
     // Compose UI
     implementation(compose.desktop.currentOs)
     // Parsing Commands
-    implementation("com.github.ajalt.clikt:clikt:3.2.0")
+    implementation("com.github.ajalt.clikt:clikt:3.3.0")
     // Loading Configs
-    implementation("com.sksamuel.hoplite:hoplite-core:1.4.6")
-    implementation("com.sksamuel.hoplite:hoplite-toml:1.4.6")
+    implementation("com.sksamuel.hoplite:hoplite-core:1.4.15")
+    implementation("com.sksamuel.hoplite:hoplite-toml:1.4.15")
 }
 
 compose.desktop {
