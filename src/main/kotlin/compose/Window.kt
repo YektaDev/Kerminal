@@ -26,13 +26,12 @@ import java.awt.Toolkit
 import kotlin.math.roundToInt
 
 fun launchAppWindow(content: @Composable () -> Unit) {
-    EventHandler.onStart()
-
     val config = try {
         appConfig
     } catch (_: UninitializedPropertyAccessException) {
         null
     }
+    config?.let { EventHandler.onStart() }
 
     val barColor = if (config == null) {
         // A fallback color in the case the config isn't loaded (InitialError)

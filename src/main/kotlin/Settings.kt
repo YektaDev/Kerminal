@@ -28,10 +28,11 @@ object Resource {
     private const val iconPath = "icon.svg"
     private const val propertiesPath = "app.properties"
 
-    val transparentBackColor = if (appConfig.theme.isDark) {
-        Color(255, 255, 255, 30)
-    } else {
-        Color(0, 0, 0, 30)
+    val transparentBackColor = try {
+        if (appConfig.theme.isDark) Color(255, 255, 255, 30)
+        else Color(0, 0, 0, 30)
+    } catch (_: UninitializedPropertyAccessException) {
+        Color(0, 0, 0, 0)
     }
 
     val properties: Properties? by lazy {
