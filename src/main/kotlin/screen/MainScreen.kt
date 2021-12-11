@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import appConfig
-import compose.KerminalTheme
 import compose.Console
+import compose.KerminalTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,9 +33,7 @@ fun MainPage() = KerminalTheme(appConfig.theme) {
     val verticalScrollState = rememberScrollState(0)
     val backgroundColor = Color(appConfig.theme.color.back)
 
-    Row(
-        modifier = Modifier.background(backgroundColor)
-    ) {
+    Row(Modifier.background(backgroundColor)) {
         Console(
             modifier = Modifier
                 .background(backgroundColor)
@@ -60,7 +58,7 @@ fun MainPage() = KerminalTheme(appConfig.theme) {
                 shape = RoundedCornerShape(percent = 50),
                 hoverDurationMillis = 250,
                 unhoverColor = backgroundColor,
-                hoverColor = Color(appConfig.theme.color.secondary)
+                hoverColor = Color(appConfig.theme.color.secondary),
             )
         )
     }

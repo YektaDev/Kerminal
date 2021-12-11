@@ -1,14 +1,14 @@
 package compose
 
 import Theme
-import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
 fun KerminalTheme(themeConfig: Theme, content: @Composable () -> Unit) {
-    DesktopMaterialTheme(
+    MaterialTheme(
         colors = Colors(
             isLight = !themeConfig.isDark,
 

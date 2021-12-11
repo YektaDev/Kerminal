@@ -4,7 +4,6 @@ import java.net.URL
 import java.util.*
 
 lateinit var appScope: ApplicationScope
-
 lateinit var appConfig: Config
 
 object State {

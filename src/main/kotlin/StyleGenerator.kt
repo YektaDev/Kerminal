@@ -17,25 +17,16 @@ class StyleGenerator {
         }
 
         if (text[index] == '\"' && (index == 0 || text[index - 1] != '\\')) {
-            if (!isInsideString) {
-                isInsideString = true
-            } else {
-                shouldChangeColor = true
-            }
+            if (!isInsideString) isInsideString = true
+            else shouldChangeColor = true
         }
 
-        if (isInsideString) {
-            return SpanStyle(color = Green)
-        }
+        if (isInsideString) return SpanStyle(color = Green)
+        State.console.colorChangeIndexList[index]?.let { lastColor = Color(it) }
 
-        State.console.colorChangeIndexList[index]?.let {
-            lastColor = Color(it)
-        }
-
-        if (lastColor != null) {
-            return SpanStyle(color = lastColor!!)
-        }
-
-        return null
+        return if (lastColor != null)
+            SpanStyle(color = lastColor!!)
+        else
+            null
     }
 }

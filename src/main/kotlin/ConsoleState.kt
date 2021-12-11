@@ -49,7 +49,7 @@ class ConsoleState {
     fun clear() {
         prevText = initialText
         this.textFieldValue = textFieldValue.copy(
-            text = initialText+ " ",
+            text = "$initialText ",
             selection = TextRange(initialText.length)
         )
         // TODO: NOT IMPLEMENTED YET

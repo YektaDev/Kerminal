@@ -5,9 +5,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun WindowContent(themeConfig: Theme?, content: @Composable () -> Unit) = if (themeConfig != null) {
-    KerminalTheme(themeConfig) {
-        content()
-    }
+    KerminalTheme(themeConfig) { content() }
 } else {
     content()
 }

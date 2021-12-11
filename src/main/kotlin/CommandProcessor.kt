@@ -8,12 +8,8 @@ object CommandProcessor {
         when (parsedCommand.size) {
             0 -> { // Ignored
             }
-            1 -> {
-                runCommand(parsedCommand[0])
-            }
-            else -> {
-                runCommand(parsedCommand[0], parsedCommand.copyOfRange(1, parsedCommand.size))
-            }
+            1 -> runCommand(parsedCommand[0])
+            else -> runCommand(parsedCommand[0], parsedCommand.copyOfRange(1, parsedCommand.size))
         }
 
         EventHandler.afterCommand(rawInput)
@@ -23,9 +19,7 @@ object CommandProcessor {
         .split(' ')
         .filter { it.isNotEmpty() }
         .toTypedArray().apply {
-            if (size >= 1) {
-                this[0] = this[0].lowercase()
-            }
+            if (isNotEmpty()) this[0] = this[0].lowercase()
         }
 
     private fun runCommand(command: String, args: Array<String> = arrayOf()) {

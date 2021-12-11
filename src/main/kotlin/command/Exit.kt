@@ -7,7 +7,5 @@ class Exit : Command(
     command = "exit",
     help = "Exit!"
 ) {
-    override fun run() {
-        appScope.exit()
-    }
+    override fun run() = appScope.exit()
 }

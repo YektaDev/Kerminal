@@ -17,19 +17,15 @@ fun Modifier.HandleKeyEvents() = onKeyEvent { event ->
         textFieldValue.selection.let { selection ->
             when (event.key) {
                 Key.DirectionRight -> {
-                    if (event.isShiftPressed) {
-                        setTextRange(TextRange(selection.start, selection.end + 1))
-                    } else {
-                        setTextRange(TextRange(selection.end + 1))
-                    }
+                    val range = if (event.isShiftPressed) TextRange(selection.start, selection.end + 1)
+                    else TextRange(selection.end + 1)
+                    setTextRange(range)
                 }
 
                 Key.DirectionLeft -> {
-                    if (event.isShiftPressed) {
-                        setTextRange(TextRange(selection.start, selection.end - 1))
-                    } else {
-                        setTextRange(TextRange(selection.end - 1))
-                    }
+                    val range = if (event.isShiftPressed) TextRange(selection.start, selection.end - 1)
+                    else TextRange(selection.end - 1)
+                    setTextRange(range)
                 }
 
                 Key.ShiftLeft -> {

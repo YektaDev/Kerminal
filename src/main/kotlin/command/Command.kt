@@ -19,31 +19,22 @@ sealed class Command(
             parse(args)
         } catch (e: Exception) {
             printError(e.message)
-        } catch (e: ProgramResult) {
+        } catch (_: ProgramResult) {
         } catch (e: PrintHelpMessage) {
-            if (e.error) {
-                printError(e.command.getFormattedHelp())
-            } else {
-                printWarning(e.command.getFormattedHelp())
-            }
+            if (e.error) printError(e.command.getFormattedHelp())
+            else printWarning(e.command.getFormattedHelp())
         } catch (e: PrintCompletionMessage) {
             printInfo(e.message)
         } catch (e: PrintMessage) {
-            if (e.error) {
-                printError(e.message)
-            } else {
-                printInfo(e.message)
-            }
+            if (e.error) printError(e.message)
+            else printInfo(e.message)
         } catch (e: UsageError) {
             printError(e.helpMessage())
         } catch (e: CliktError) {
             printError(e.message)
         } catch (e: Abort) {
-            if (e.error) {
-                printError(currentContext.localization.aborted())
-            } else {
-                printInfo(currentContext.localization.aborted())
-            }
+            if (e.error) printError(currentContext.localization.aborted())
+            else printInfo(currentContext.localization.aborted())
         }
     }
 }

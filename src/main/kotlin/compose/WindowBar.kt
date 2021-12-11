@@ -32,13 +32,9 @@ fun WindowScope.WindowBar(color: Color, windowState: WindowState, exitClick: () 
         Row {
             WindowBarButton(Color(0xffff1744), exitClick)
             Spacer(Modifier.width(8.dp))
-            WindowBarButton(Color(0xff00e676)) {
-                windowState.switchMaximize()
-            }
+            WindowBarButton(Color(0xff00e676)) { windowState.switchMaximize() }
             Spacer(Modifier.width(8.dp))
-            WindowBarButton(Color(0xffffea00)) {
-                windowState.minimize()
-            }
+            WindowBarButton(Color(0xffffea00)) { windowState.minimize() }
         }
     }
 }
