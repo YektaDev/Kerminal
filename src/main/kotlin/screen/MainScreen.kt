@@ -20,14 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import appConfig
-import compose.KonsoleTheme
+import compose.KerminalTheme
 import compose.Console
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Preview
 @Composable
-fun MainPage() = KonsoleTheme(appConfig.theme) {
+fun MainPage() = KerminalTheme(appConfig.theme) {
     val coroutineScope = rememberCoroutineScope()
     val consoleState = remember { State.console }
     val verticalScrollState = rememberScrollState(0)

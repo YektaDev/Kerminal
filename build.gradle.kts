@@ -55,15 +55,15 @@ tasks.withType<Jar> {
     manifest {
         attributes["Manifest-Version"] = "1.0"
         attributes["Main-Class"] = "Main"
-        attributes["Project-URL"] = "https://github.com/YektaDev/Konsole"
+        attributes["Project-URL"] = "https://github.com/YektaDev/Kerminal"
         attributes["Developer"] = "Ali Khaleqi Yekta"
     }
 }
 
-// Output: build/libs/Konsole.jar
+// Output: build/libs/Kerminal.jar
 tasks.withType<ShadowJar> {
     dependsOn(tasks.withType<KotlinCompile>())
-    archiveBaseName.set("Konsole")
+    archiveBaseName.set("Kerminal")
     archiveVersion.set("")
     archiveAppendix.set("")
     archiveClassifier.set("")
@@ -73,7 +73,7 @@ tasks.withType<ShadowJar> {
 tasks.register<Copy>("generateProduction") {
     dependsOn(tasks.withType<ShadowJar>())
     from(
-        layout.buildDirectory.file("libs/Konsole.jar"),
+        layout.buildDirectory.file("libs/Kerminal.jar"),
         layout.projectDirectory.file("defaults/.")
     )
     into(layout.projectDirectory.dir("Release"))
