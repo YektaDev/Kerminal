@@ -37,10 +37,8 @@ object ConsoleHandler {
 
 private fun String.exceptLastLine(): String {
     val lastNewLine = lastIndexOf('\n')
-
-    return this.apply {
-        if (lastNewLine != -1) substring(0, lastNewLine)
-    }
+    return if (lastNewLine == -1) this
+    else this.substring(0, lastNewLine)
 }
 
 private fun identicalLinesExceptLastLineAreEqual(s1: String, s2: String): Boolean {
